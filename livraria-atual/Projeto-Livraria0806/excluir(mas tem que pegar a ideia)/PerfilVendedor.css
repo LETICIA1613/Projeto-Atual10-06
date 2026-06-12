@@ -1,0 +1,198 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, var(--cinza-claro) 0%, white 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+:root {
+    --vermelho-escuro: #8C031C;
+    --rosa-medio: #BF6980;
+    --cinza-claro: #F0F0F2;
+    --dourado: #D9B607;
+    --marrom: #8C5C03;
+    --branco: #ffffff;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 30px;
+    padding: 60px 50px;
+    box-shadow: 0 25px 80px rgba(140, 3, 28, 0.12);
+    border-top: 8px solid var(--rosa-medio);
+}
+
+/* PERFIL */
+.perfil {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 50px;
+    padding-bottom: 40px;
+    border-bottom: 2px solid var(--cinza-claro);
+}
+
+.perfil img {
+    width: 140px;
+    height: 140px;
+    border-radius: 25px;
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: 0 15px 45px rgba(191, 105, 128, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.perfil img:hover {
+    transform: scale(1.05);
+}
+
+.info h2 {
+    color: var(--vermelho-escuro);
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+
+.vendas {
+    color: var(--marrom);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.avaliacao {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, var(--cinza-claro) 0%, white 100%);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.avaliacao span {
+    color: var(--dourado);
+    font-size: 1.4rem;
+}
+
+.avaliacao p {
+    color: var(--vermelho-escuro);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* AÇÕES - SEMPRE 4 NA MESMA LINHA */
+.acoes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-top: 50px;
+}
+
+.card {
+    background: white;
+    border-radius: 25px;
+    padding: 35px 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid var(--cinza-claro);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--rosa-medio), var(--dourado));
+}
+
+.card span {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.card p {
+    color: var(--vermelho-escuro);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 60px rgba(140, 3, 28, 0.2);
+    border-color: var(--rosa-medio);
+}
+
+.card:hover span {
+    transform: scale(1.2);
+}
+
+.card:hover p {
+    color: var(--rosa-medio);
+}
+
+/* RESPONSIVO */
+@media (max-width: 1024px) {
+    .acoes {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 40px 30px;
+        margin: 20px 10px;
+        border-radius: 20px;
+    }
+    
+    .perfil {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    
+    .acoes {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .card {
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .acoes {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    body {
+        padding: 20px 15px;
+    }
+    
+    .container {
+        padding: 30px 25px;
+    }
+}
