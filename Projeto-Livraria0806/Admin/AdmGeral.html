@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Layout */
+body {
+    display: flex;
+    background: #F0F0F2;
+}
+
+/* MENU LATERAL */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #8C031C;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+    color: #D9B607;
+}
+
+.menu {
+    list-style: none;
+}
+
+.menu li {
+    margin: 12px 0;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.menu li:hover {
+    background: #BF6980;
+}
+
+.submenu {
+    margin-left: 15px;
+    font-size: 14px;
+    color: #F0F0F2;
+}
+
+/* CONTEÚDO */
+.main {
+    flex: 1;
+    padding: 20px;
+}
+
+/* CARDS */
+.cards {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.card {
+    flex: 1;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    border-left: 6px solid #8C5C03;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+    color: #8C031C;
+}
+
+.card span {
+    font-size: 20px;
+    font-weight: bold;
+}
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.top-bar input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.btn-ajuda {
+    background: #F0F0F2;
+    border: 1px solid #ccc;
+}
+
+.filtros {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filtros button {
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+}
+
+.filtros button:hover {
+    background: #BF6980;
+    color: white;
+}
+/* TABELA */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th {
+    background: #BF6980;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+/* BOTÕES */
+button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-aprovar {
+    background: #D9B607;
+}
+
+.btn-concluido {
+    background: #BF6980;
+;
+}
+
+.btn-recusar {
+    background: #8C031C;
+    color: white;
+}
+
+.btn-detalhes {
+    background: #8C5C03;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENU -->
+<div class="sidebar">
+    <h2>Painel</h2>
+    <ul class="menu">
+        <li><strong>Vendedores ▼</strong></li>
+        <li class="submenu" type="button" onclick="window.location.href='TelaInícioAdmin.html'" >Perfis</li>
+        <li class="submenu" type="button" onclick="window.location.href='RelatórioAdmin.html'" >Atividade</li>
+        <li class="submenu" type="button" onclick="window.location.href='AlertaAdmin.html'">Alertas/Notificações</li>
+
+        <li><strong>Clientes ▼</strong></li>
+        <li class="submenu active">Adm Geral</li>
+        <li class="submenu" type="button" onclick="window.location.href='Marketing.html'" >Marketing</li>
+        <li class="submenu" type="button" onclick="window.location.href='Suporte.html'">Suporte</li>
+    </ul>
+</div>
+
+<!-- CONTEÚDO -->
+<div class="main">
+
+    <!-- CARDS -->
+    <div class="cards">
+        <div class="card">
+            <h3>Pedidos Concluidos</h3>
+            <span>1.284</span>
+        </div>
+
+        <div class="card">
+            <h3>Pedidos em Andamentos</h3>
+            <span>1.091</span>
+        </div>
+
+        <div class="card">
+            <h3>Pedidos em Reembolso</h3>
+            <span>47</span>
+        </div>
+
+        <div class="card">
+            <h3>Pedidos Cancelados</h3>
+            <span>146</span>
+        </div>
+    </div>
+    <div class="top-bar">
+        <input type="search" placeholder="Buscar por nome, e-mail ou CNPJ...">
+    
+    </div>
+    
+   
+    <!-- TABELA -->
+    <table>
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Valor do Produto</th>
+                <th>Valor do Frete</th>
+                <th>Transportadora</th>
+                <th>Cliente</th>
+                <th>Empresa</th>
+                <th>Situação</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Nome do Produto</td>
+                <td>R$20,00</td>
+                <td>R$10,00</td>
+                <td>Correios</td>
+                <td>Nome do Usuário</td>
+                <td>Nome da Empresa</td>
+                
+                <td>
+                    <button class="btn-concluido">Concluido</button>
+                </td>
+            </tr>
+
+           
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

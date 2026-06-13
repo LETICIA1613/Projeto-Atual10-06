@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alertas - Painel Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Layout Principal */
+body {
+    display: flex;
+    background-color: #F0F0F2;
+    min-height: 100vh;
+}
+
+/* MENU LATERAL - EXATO */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #8C031C;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+    color: #D9B607;
+}
+
+.menu {
+    list-style: none;
+}
+
+.menu li {
+    margin: 12px 0;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: 500;
+}
+
+.menu li:hover {
+    background: #BF6980;
+}
+
+.menu li.active {
+    background: #BF6980;
+}
+
+.submenu {
+    margin-left: 15px;
+    font-size: 14px;
+    color: #F0F0F2;
+}
+
+/* CONTEÚDO */
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    flex: 1;
+}
+
+/* CONTAINER CARDS */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+/* CARDS */
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    border-left: 6px solid #8C5C03;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+h3 {
+    margin-bottom: 20px;
+    color: #8C031C;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* ITENS ALERTAS */
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.item:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.item span {
+    color: #666;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* BOTÕES */
+.btn {
+    margin-top: 10px;
+    padding: 12px 24px;
+    border: 2px solid #8C031C;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #8C031C;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.3s;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn:hover {
+    background: #8C031C;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* RANKING */
+.rank-item {
+    margin-bottom: 20px;
+}
+
+.bar-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.bar {
+    height: 8px;
+    background: linear-gradient(90deg, #D9B607, #8C5C03);
+    border-radius: 6px;
+    flex: 1;
+}
+
+.valor {
+    min-width: 80px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #8C5C03;
+    text-align: right;
+}
+
+/* LIVROS */
+.list-number {
+    font-weight: 700;
+    margin-right: 12px;
+    color: #8C5C03;
+    font-size: 16px;
+}
+
+/* STATUS BARS */
+.status-section {
+    margin-bottom: 20px;
+}
+
+.status-section p {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.status-bar {
+    height: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.status-bar::after {
+    content: attr(data-label);
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    z-index: 2;
+}
+
+.entregue { background: linear-gradient(90deg, #8C031C, #BF6980); width: 80%; }
+.transporte { background: linear-gradient(90deg, #BF6980, #D9B607); width: 40%; }
+.processando { background: linear-gradient(90deg, #D9B607, #8C5C03); width: 25%; }
+.cancelado { background: #ccc; width: 10%; }
+.cancelado::after { color: #666; }
+.disputa { background: linear-gradient(90deg, #8C5C03, #D9B607); width: 5%; }
+
+/* TOP BAR */
+.top-bar {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border-left: 6px solid #D9B607;
+}
+
+.top-bar h1 {
+    color: #8C031C;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+    
+    .container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENU LATERAL -->
+<div class="sidebar">
+    <h2>Painel</h2>
+    <ul class="menu">
+        <li><strong>Vendedores ▼</strong></li>
+        <li class="submenu" type="button" onclick="window.location.href='TelaInícioAdmin.html'" >Perfis</li>
+        <li class="submenu" type="button" onclick="window.location.href='RelatórioAdmin.html'" >Atividade</li>
+        <li class="submenu active">Alertas/Notificações</li>
+
+
+        <li><strong>Clientes ▼</strong></li>
+        <li class="submenu" type="button" onclick="window.location.href='AdmGeral.html'" >Adm Geral</li>
+        <li class="submenu" type="button" onclick="window.location.href='Marketing.html'" >Marketing</li>
+        <li class="submenu" type="button" onclick="window.location.href='Suporte.html'">Suporte</li>
+</div>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<div class="main-content">
+    
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <h1>Alertas e Notificações</h1>
+    </div>
+
+    <!-- CARDS -->
+    <div class="container">
+
+        <!-- ALERTAS RECENTES -->
+        <div class="card">
+            <h3>🚨 Alertas Recentes</h3>
+
+            <div class="item">
+                <div class="row">
+                    <div class="dot" style="background:#D9B607"></div>
+                    47 vendedores aguardando aprovação
+                </div>
+                <span>Agora</span>
+            </div>
+
+            <div class="item">
+                <div class="row">
+                    <div class="dot" style="background:#8C031C"></div>
+                    TechBooks LTDA recebeu denúncias
+                </div>
+                <span>2h atrás</span>
+            </div>
+
+            <div class="item">
+                <div class="row">
+                    <div class="dot" style="background:#BF6980"></div>
+                Pico de acessos detectado
+                </div>
+                <span>4h atrás</span>
+            </div>
+
+            <div class="item">
+                <div class="row">
+                    <div class="dot" style="background:#8C5C03"></div>
+                12 pedidos em disputa
+                </div>
+                <span>Ontem</span>
+            </div>
+
+            <button class="btn">Ver Todos os Alertas</button>
+        </div>
+
+        <!-- TOP VENDEDORES -->
+        <div class="card">
+            <h3>🏆 Top Vendedores (Hoje)</h3>
+        
+            <div class="rank-item">
+                <div class="item">
+                    <span>1. Livraria Cultura</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar" style="width:90%"></div>
+                    <span class="valor">R$18.480</span>
+                </div>
+            </div>
+        
+            <div class="rank-item">
+                <div class="item">
+                    <span>2. Papiro Infantil</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar" style="width:70%"></div>
+                    <span class="valor">R$9.870</span>
+                </div>
+            </div>
+        
+            <div class="rank-item">
+                <div class="item">
+                    <span>3. Sebos do Nordeste</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar" style="width:60%"></div>
+                    <span class="valor">R$3.210</span>
+                </div>
+            </div>
+        
+            <button class="btn">Ver Ranking Completo</button>
+        </div>
+
+        <!-- LIVROS MAIS VENDIDOS -->
+        <div class="card">
+            <h3>📚 Livros Mais Vendidos</h3>
+
+            <div class="item">
+                <div><span class="list-number">1</span>O Senhor dos Anéis</div>
+                <div>1.204</div>
+            </div>
+
+            <div class="item">
+                <div><span class="list-number">2</span>Sapiens</div>
+                <div>987</div>
+            </div>
+
+            <div class="item">
+                <div><span class="list-number">3</span>Harry Potter</div>
+                <div>876</div>
+            </div>
+
+            <div class="item">
+                <div><span class="list-number">4</span>A Sutil Arte de Ligar</div>
+                <div>754</div>
+            </div>
+
+            <div class="item">
+                <div><span class="list-number">5</span>Dom Casmurro</div>
+                <div>643</div>
+            </div>
+        </div>
+
+        <!-- STATUS PEDIDOS -->
+        <div class="card">
+            <h3>📦 Status dos Pedidos</h3>
+
+            <div class="status-section">
+                <p>Entregue</p>
+                <div class="status-bar entregue" data-label="80%"></div>
+            </div>
+
+            <div class="status-section">
+                <p>Em Transporte</p>
+                <div class="status-bar transporte" data-label="40%"></div>
+            </div>
+
+            <div class="status-section">
+                <p>Processando</p>
+                <div class="status-bar processando" data-label="25%"></div>
+            </div>
+
+            <div class="status-section">
+                <p>Cancelado</p>
+                <div class="status-bar cancelado" data-label="10%"></div>
+            </div>
+
+            <div class="status-section">
+                <p>Disputa</p>
+                <div class="status-bar disputa" data-label="5%"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

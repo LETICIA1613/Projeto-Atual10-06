@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Livraria</title>
+
+<link rel="stylesheet" href="Entrar.css">
+
+</head>
+
+<body>
+
+<!-- MENU LATERAL -->
+
+<div id="menu" class="sidebar">
+    <span  class="close-btn" onclick="fecharMenu()">×</span>
+
+
+<label><input type="checkbox"> Visão do Usuário</label>
+<label><input type="checkbox"> Visão do Vendedor</label>
+
+
+<h3>Gênero</h3>
+<label><input type="checkbox"> Romance</label>
+<label><input type="checkbox"> Fantasia</label>
+<label><input type="checkbox"> Terror</label>
+<label><input type="checkbox"> Suspense</label>
+
+<h3>Faixa Etária</h3>
+<label><input type="checkbox"> Infantil</label>
+<label><input type="checkbox"> Juvenil</label>
+<label><input type="checkbox"> Adulto</label>
+
+<h3>Quantidade de Páginas</h3>
+<label><input type="checkbox"> Até 150</label>
+<label><input type="checkbox"> 150 - 300</label>
+<label><input type="checkbox"> 300+</label>
+
+<button id="Filtrar">Filtrar</button>
+
+</div>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+<div class="menu-icon" onclick="abrirMenu()">☰</div>
+
+<h1 class="logo">📚 Livraria</h1>
+
+<div class="search-bar">
+<input type="text" placeholder="Buscar livros...">
+</div>
+
+<div class="icons">
+<button class="btn-sem-borda" onclick="window.location.href='Carrinho.html'">🛒</button>
+<button class="btn-sem-borda" onclick="">⚙️</button>
+<button class="btn-sem-borda" onclick="window.location.href='usuario.html'">👤</button> 
+</div>
+
+</header>
+
+
+<!-- BANNER -->
+
+
+
+</section>
+
+
+
+
+
+<!-- LIVROS -->
+<section class="section">
+
+<h2>Os Livros Mais Lidos no Brasil</h2>
+
+<div class="cards">
+
+<div class="card" onclick="abrirProduto()">
+
+<img src="img/capa.jpg">
+
+<h3>A Revolução dos Bichos</h3>
+
+<p>Por: <span>R$34,90</span></p>
+
+<button class="btn-carrinho" onclick="event.stopPropagation(); adicionarCarrinho()">
+Adicionar ao Carrinho
+</button>
+
+</div>
+
+
+<div class="card" onclick="abrirProduto()">
+
+<img src="img/capa.jpg">
+
+<h3>O Sol é Para Todos</h3>
+
+<p>Por: <span>R$34,90</span></p>
+
+<button class="btn-carrinho" onclick="event.stopPropagation(); adicionarCarrinho()">
+Adicionar ao Carrinho
+</button>
+
+</div>
+
+
+<div class="card" onclick="abrirProduto()">
+
+<img src="img/capa.jpg">
+
+<h3>O Pequeno Príncipe</h3>
+
+<p>Por: <span>R$34,90</span></p>
+
+<button class="btn-carrinho" onclick="event.stopPropagation(); adicionarCarrinho()">
+Adicionar ao Carrinho
+</button>
+
+</div>
+
+
+<div class="card" onclick="abrirProduto()">
+
+<img src="img/capa.jpg">
+
+<h3>Drácula</h3>
+
+<p>Por: <span>R$34,90</span></p>
+
+<button class="btn-carrinho" onclick="event.stopPropagation(); adicionarCarrinho()">
+Adicionar ao Carrinho
+</button>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<script>
+    
+function abrirMenu() {
+    document.getElementById("menu").classList.add("open");
+}
+
+function fecharMenu() {
+    document.getElementById("menu").classList.remove("open");
+}
+
+function abrirProduto(){
+    window.location.href = "DescriçãoProduto.html";
+}
+
+function adicionarCarrinho(){
+    window.location.href = "Carrinho.html";
+}
+
+
+</script>
+
+</body>
+</html>

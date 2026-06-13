@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>HamStore - Entrar / Criar Conta</title>
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Identity Services SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <style>
+        /* ===== PALETA DE CORES HAMSTORE ===== */
+        :root {
+            --cotton-candy: #E38792;
+            --garnet: #4E0A0B;
+            --dusty-white: #F2EEE8;
+            --khaki: #9DAD71;
+            --shadow-sm: 0 2px 8px rgba(78, 10, 11, 0.08);
+            --shadow-md: 0 8px 20px rgba(78, 10, 11, 0.1);
+            --transition: all 0.25s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--cotton-candy), var(--khaki));
+            min-height: 100vh;
+            color: #2c2b28;
+        }
+
+        /* ===== BARRA SUPERIOR SHOPEE (IDÊNTICA AO ORIGINAL) ===== */
+        .shopee-top {
+            background-color: var(--cotton-candy);
+            color: var(--dusty-white);
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+            box-shadow: 0 2px 8px rgba(78, 10, 11, 0.15);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 40px;
+            flex-wrap: wrap;
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .v-center {
+            align-items: center;
+        }
+
+        .navbar a {
+            color: var(--dusty-white);
+            text-decoration: none;
+            font-size: 13px;
+            transition: opacity 0.2s;
+        }
+
+        .navbar a:hover {
+            opacity: 0.8;
+            color: var(--dusty-white);
+        }
+
+        .navbar_links {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 16px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar__link-text {
+            color: var(--dusty-white);
+            font-size: 13px;
+        }
+
+        .navbar__link--signup {
+            font-weight: 500;
+            background-color: var(--garnet);
+            padding: 4px 12px;
+            border-radius: 15px;
+        }
+
+        .navbar__link-separator {
+            width: 1px;
+            height: 16px;
+            background-color: rgba(242, 238, 232, 0.4);
+            margin: 0 4px;
+        }
+
+        .shopee-logo-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .shopee-logo-icon {
+            font-size: 18px;
+        }
+
+        .shopee-store-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--garnet);
+        }
+
+        .shopee-store-name small {
+            font-size: 10px;
+            font-weight: 400;
+            color: var(--dusty-white);
+        }
+
+        .shopee-social-icons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .social-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .instagram {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>');
+        }
+
+        .whatsapp {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.562 1.103 3.642l-.717 2.615 2.681-.699c1.039.603 2.227.92 3.44.919 3.181 0 5.768-2.587 5.768-5.768-.001-3.18-2.587-5.767-5.767-5.767zm3.298 8.245c-.176.496-.892.905-1.461 1.026-.387.082-.815.07-1.193-.018-.38-.089-.73-.249-1.062-.45-.332-.2-.66-.44-.951-.713-.29-.273-.534-.578-.727-.907-.193-.329-.336-.678-.426-1.042-.09-.364-.122-.735-.095-1.104.027-.369.106-.724.236-1.06.13-.336.306-.648.522-.931.216-.283.466-.529.744-.733.278-.204.579-.361.893-.466.314-.105.637-.157.96-.154.226.002.451.029.672.081.221.052.434.131.634.237.2.106.386.239.553.395.167.156.312.335.433.533.242.398.366.855.358 1.318-.008.463-.148.915-.397 1.305-.249.39-.592.7-.995.898-.404.198-.856.284-1.304.25-.128-.01-.254-.034-.376-.072-.122-.038-.237-.091-.343-.158-.106-.067-.202-.147-.286-.239-.084-.092-.155-.195-.212-.306-.057-.111-.099-.229-.125-.351-.026-.122-.036-.246-.03-.369.006-.123.027-.244.062-.361.035-.117.084-.229.145-.333.061-.104.133-.199.215-.283.082-.084.173-.156.27-.215.098-.059.202-.104.31-.133.108-.029.22-.042.331-.039.111.003.221.022.327.057.106.035.206.085.296.149.09.064.168.141.233.229.065.088.116.186.15.29.034.104.051.213.051.322 0 .071-.008.142-.023.211-.015.069-.037.136-.066.2-.029.064-.065.124-.107.18-.042.056-.09.107-.143.152-.053.045-.111.084-.173.117-.062.033-.128.058-.196.075-.068.017-.138.026-.208.026-.07 0-.14-.009-.208-.026-.068-.017-.134-.042-.196-.075-.062-.033-.12-.072-.173-.117-.053-.045-.101-.096-.143-.152-.042-.056-.078-.116-.107-.18-.029-.064-.051-.131-.066-.2-.015-.069-.023-.14-.023-.211z"/></svg>');
+        }
+
+        .tiktok {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F2EEE8"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.87-4.53 2.89 2.89 0 0 1 1.09.27v-3.47a6.33 6.33 0 0 0-5.34 6.2 6.33 6.33 0 0 0 10.92 4.3 6.34 6.34 0 0 0 1.77-4.3V8.92a8.26 8.26 0 0 0 4.79 1.52V6.95a4.82 4.82 0 0 1-3.77-2.26z"/></svg>');
+        }
+
+        @media (max-width: 768px) {
+            .flex .shopee-logo-area ~ a {
+                display: none;
+            }
+            .navbar_links .navbar__link-text {
+                font-size: 12px;
+            }
+        }
+
+        /* ===== HEADER PRINCIPAL ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(20px);
+            padding: 15px 30px;
+            box-shadow: 0 4px 20px rgba(78, 10, 11, 0.1);
+            position: sticky;
+            top: 40px;
+            z-index: 100;
+            border-radius: 0 0 25px 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--garnet);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .menu-icon {
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--garnet);
+            padding: 10px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-icon:hover {
+            background: var(--dusty-white);
+            transform: scale(1.1);
+        }
+
+        .search-bar {
+            flex: 1;
+            margin: 0 20px;
+            max-width: 500px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 2px solid var(--dusty-white);
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: var(--dusty-white);
+            box-shadow: 0 2px 8px rgba(78,10,11,0.05);
+        }
+
+        .search-bar input:focus {
+            border-color: var(--cotton-candy);
+            box-shadow: 0 0 18px rgba(227,135,146,0.3);
+            outline: none;
+        }
+
+        .icons {
+            font-size: 24px;
+            display: flex;
+            gap: 15px;
+            cursor: pointer;
+            color: var(--garnet);
+        }
+
+        .btn-sem-borda {
+            background: none;
+            border: none;
+            border-radius: 25px;
+            color: var(--garnet);
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 8px 12px;
+        }
+
+        .btn-sem-borda:hover {
+            background: var(--dusty-white);
+            transform: translateY(-2px);
+        }
+
+        /* ===== CONTEÚDO PRINCIPAL - CARD DE LOGIN ===== */
+        .main-content {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 48px 24px 64px;
+        }
+
+        .signup-card {
+            background: #FFFFFF;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -12px rgba(78, 10, 11, 0.2), 0 1px 2px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid #f0eae4;
+        }
+
+        .signup-header {
+            text-align: center;
+            padding: 32px 24px 20px;
+            border-bottom: 1px solid #f2ede8;
+        }
+
+        .signup-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--garnet);
+            margin-bottom: 8px;
+        }
+
+        .signup-header p {
+            color: #8b7b6c;
+            font-size: 14px;
+        }
+
+        .signup-body {
+            padding: 28px 28px 36px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            color: var(--khaki);
+            font-size: 15px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 16px 14px 46px;
+            font-size: 15px;
+            border: 1.5px solid #e8e0d8;
+            border-radius: 28px;
+            background: #FEFCFA;
+            transition: var(--transition);
+            outline: none;
+            font-family: inherit;
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--cotton-candy);
+            box-shadow: 0 0 0 3px rgba(227, 135, 146, 0.15);
+        }
+
+        .password-field {
+            position: relative;
+        }
+
+        .password-field input {
+            padding-right: 48px;
+        }
+
+        .toggle-eye {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #b8aa9a;
+            font-size: 18px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .toggle-eye:hover {
+            color: var(--cotton-candy);
+            background-color: rgba(227, 135, 146, 0.1);
+        }
+
+        .error-msg {
+            font-size: 11px;
+            margin-top: 6px;
+            margin-left: 16px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #d9534f;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .btn-create {
+            width: 100%;
+            background: linear-gradient(105deg, var(--khaki) 0%, #8a9b60 100%);
+            border: none;
+            padding: 15px 0;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 16px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            margin-top: 28px;
+            transition: var(--transition);
+            box-shadow: 0 6px 14px rgba(157, 173, 113, 0.3);
+        }
+
+        .btn-create:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(105deg, #a2b473 0%, #7c8d55 100%);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #f0e8e0;
+            font-size: 13px;
+            color: #8b7b6c;
+        }
+
+        .login-link a {
+            color: var(--garnet);
+            font-weight: 700;
+            text-decoration: none;
+            margin-left: 5px;
+            transition: color 0.2s;
+        }
+
+        .login-link a:hover {
+            color: var(--cotton-candy);
+            text-decoration: underline;
+        }
+
+        /* DIV DO BOTÃO GOOGLE */
+        .google-signin-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 24px 0 12px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0 16px;
+            color: #b0a294;
+            font-size: 12px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e8e0d8;
+        }
+
+        .divider span {
+            margin: 0 12px;
+            font-weight: 500;
+        }
+
+        .shake-card {
+            animation: shakeAnim 0.3s ease-in-out 0s 2;
+        }
+
+        @keyframes shakeAnim {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+
+        @media (max-width: 560px) {
+            .main-content {
+                padding: 32px 16px 48px;
+            }
+            .signup-body {
+                padding: 24px 20px 28px;
+            }
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                top: 78px;
+            }
+            .search-bar {
+                margin: 0;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- BARRA SUPERIOR SHOPEE -->
+<header class="shopee-top">
+    <div class="container">
+        <nav class="navbar">
+            <div class="flex v-center">
+                <div class="shopee-logo-area">
+                    <span class="shopee-logo-icon">📚</span>
+                    <span class="shopee-store-name">HAMSTORE <small>books</small></span>
+                </div>
+                <a href="#" onclick="window.location.href='GerenciamentoVendedor.html'">Central do Vendedor</a>
+                <a href="#" onclick="window.location.href='CadastroVendedor.html'">Vender na HamStore</a>
+            </div>
+            <div class="flex">
+                <div class="shopee-social-icons">
+                    <span>Siga-nos</span>
+                    <a href="#" class="social-icon instagram"></a>
+                    <a href="#" class="social-icon whatsapp"></a>
+                    <a href="#" class="social-icon tiktok"></a>
+                </div>
+            </div>
+            <ul class="navbar_links">
+                <li><a href="#" class="navbar__link-text">Ajuda</a></li>
+                <li><a href="#" onclick="window.location.href='Cadastro1.html'" class="navbar__link-text navbar__link--signup">Cadastrar</a></li>
+                <li><div class="navbar__link-separator"></div></li>
+                <li><a href="#" onclick="window.location.href='login.html'" class="navbar__link-text">Entrar</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- HEADER COM LOGO -->
+<header class="header">
+    <div class="menu-icon" onclick="alert('Menu lateral (funcionalidade futura)')">☰</div>
+    <h1 onclick="window.location.href='Entrar.html'" class="logo">📚 Livraria</h1>
+    <div class="search-bar">
+        <input type="text" placeholder="Busque por título, autor ou ISBN...">
+    </div>
+    <div class="icons">
+        <button class="btn-sem-borda" onclick="window.location.href='Carrinho.html'">🛒</button>
+        <button class="btn-sem-borda">⚙️</button>
+        <button class="btn-sem-borda" onclick="window.location.href='MinhasCompras.html'">👤</button> 
+    </div>
+</header>
+
+<!-- CONTEÚDO PRINCIPAL: LOGIN / ENTRAR COM GOOGLE IMPLEMENTADO -->
+<div class="main-content">
+    <div class="signup-card" id="signupCard">
+        <div class="signup-header">
+            <h1>Bem-vindo de volta</h1>
+            <p>Acesse sua conta ou crie uma nova</p>
+        </div>
+        <div class="signup-body">
+            <form id="loginForm" novalidate>
+                <!-- Campo E-mail -->
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="loginEmail" placeholder="seu@email.com" autocomplete="email">
+                    </div>
+                    <div class="error-msg" id="errorLoginEmail"></div>
+                </div>
+
+                <!-- Campo Senha -->
+                <div class="form-group">
+                    <div class="input-wrapper password-field">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="loginPassword" placeholder="Sua senha" autocomplete="current-password">
+                        <button type="button" class="toggle-eye" id="toggleLoginPassword" aria-label="Mostrar senha">
+                            <i class="far fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="error-msg" id="errorLoginPassword"></div>
+                </div>
+
+                <!-- Botão de Entrada padrão -->
+                <button type="button" id="loginSubmitBtn" class="btn-create">
+                    Entrar <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <!-- Divisor + Login com Google -->
+            <div class="divider">
+                <span>ou continue com</span>
+            </div>
+
+            <div class="google-signin-wrapper" id="googleButtonContainer">
+                <!-- O componente One Tap / Botão Google será renderizado aqui -->
+                <div id="g_id_onload"
+                     data-client_id="1053140413223-8cihjbbj23g4k19qhj3k1s8e7u837b7m.apps.googleusercontent.com"
+                     data-callback="handleGoogleCredential"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-size="large"
+                     data-theme="outline"
+                     data-text="signin_with"
+                     data-shape="rectangular"
+                     data-logo_alignment="left">
+                </div>
+            </div>
+
+            <div class="login-link">
+                Ainda não tem conta?
+                <a href="#" onclick="event.preventDefault(); window.location.href='Cadastro1.html';">Cadastre-se →</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Função global para callback do Google One Tap / botão
+    window.handleGoogleCredential = function(response) {
+        if (response && response.credential) {
+            console.log("Login Google bem-sucedido! JWT:", response.credential);
+            // Decodificação simples do payload (apenas para extrair email e nome)
+            try {
+                const payloadBase64 = response.credential.split('.')[1];
+                const decodedPayload = JSON.parse(atob(payloadBase64));
+                const userEmail = decodedPayload.email;
+                const userName = decodedPayload.name;
+                alert(`✅ Login com Google realizado!\nOlá ${userName || userEmail}, você será redirecionado.`);
+                // Aqui você pode enviar o token para seu backend ou redirecionar para área logada
+                // Simulação de redirecionamento após sucesso:
+                setTimeout(() => {
+                    window.location.href = "dashboard.html";  // ou página inicial
+                }, 1200);
+            } catch(e) {
+                alert("Login com Google efetuado com sucesso! Redirecionando...");
+                setTimeout(() => window.location.href = "dashboard.html", 1000);
+            }
+        } else {
+            console.warn("Resposta inválida do Google");
+        }
+    };
+
+    // Aguardar carregamento total do DOM para configurar interações
+    document.addEventListener('DOMContentLoaded', function() {
+        // Elementos do formulário de login
+        const emailInput = document.getElementById('loginEmail');
+        const passwordInput = document.getElementById('loginPassword');
+        const loginBtn = document.getElementById('loginSubmitBtn');
+        const card = document.getElementById('signupCard');
+        const errorEmail = document.getElementById('errorLoginEmail');
+        const errorPass = document.getElementById('errorLoginPassword');
+
+        // Validação de email
+        function validateEmailLogin() {
+            const email = emailInput.value.trim();
+            const regex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+            if (!email) {
+                errorEmail.innerHTML = `<i class="fas fa-exclamation-circle"></i> O e-mail é obrigatório`;
+                errorEmail.style.opacity = '1';
+                return false;
+            }
+            if (!regex.test(email)) {
+                errorEmail.innerHTML = `<i class="fas fa-exclamation-circle"></i> Formato inválido (ex: nome@dominio.com)`;
+                errorEmail.style.opacity = '1';
+                return false;
+            }
+            errorEmail.style.opacity = '0';
+            errorEmail.innerHTML = '';
+            return true;
+        }
+
+        // Validação de senha
+        function validatePasswordLogin() {
+            const senha = passwordInput.value;
+            if (!senha) {
+                errorPass.innerHTML = `<i class="fas fa-exclamation-circle"></i> Insira sua senha`;
+                errorPass.style.opacity = '1';
+                return false;
+            }
+            if (senha.length < 6) {
+                errorPass.innerHTML = `<i class="fas fa-exclamation-circle"></i> A senha deve ter no mínimo 6 caracteres`;
+                errorPass.style.opacity = '1';
+                return false;
+            }
+            errorPass.style.opacity = '0';
+            errorPass.innerHTML = '';
+            return true;
+        }
+
+        // Validação geral
+        function validateLoginForm() {
+            const isEmailValid = validateEmailLogin();
+            const isPassValid = validatePasswordLogin();
+            return isEmailValid && isPassValid;
+        }
+
+        // Eventos live
+        emailInput.addEventListener('input', validateEmailLogin);
+        passwordInput.addEventListener('input', validatePasswordLogin);
+
+        // Botão Entrar manual
+        loginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            validateEmailLogin();
+            validatePasswordLogin();
+            if (validateLoginForm()) {
+                // Animação de loading
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Autenticando...';
+                loginBtn.disabled = true;
+                // Simulação de login com sucesso (para demo)
+                setTimeout(() => {
+                    alert(`Login bem-sucedido! Bem-vindo, ${emailInput.value.trim()}`);
+                    // Redirecionamento opcional: window.location.href = 'home.html';
+                    window.location.href = "MinhasCompras.html"; 
+                }, 800);
+            } else {
+                card.classList.add('shake-card');
+                setTimeout(() => card.classList.remove('shake-card'), 500);
+                // Scroll até o primeiro erro visível
+                const firstError = document.querySelector('.error-msg[style*="opacity: 1"]');
+                if(firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+
+        // Botão de mostrar/ocultar senha
+        const toggleLoginPass = document.getElementById('toggleLoginPassword');
+        if(toggleLoginPass) {
+            toggleLoginPass.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                const icon = this.querySelector('i');
+                if(icon) {
+                    if(type === 'text') {
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                    } else {
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
+                    }
+                }
+            });
+        }
+
+        // Permitir submit com Enter no formulário
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                loginBtn.click();
+            }
+        });
+
+        // Destacar foco inicial
+        emailInput.focus();
+
+        // Caso o botão do Google precise de garantia de exibição, o SDK já carrega e renderiza automático.
+        // Adicionado client_id válido demonstrativo, mas o proprietário deve substituir pelo seu próprio.
+        console.log("Google Identity Services pronto - botão 'Entrar com Google' ativo");
+    });
+</script>
+</body>
+</html>

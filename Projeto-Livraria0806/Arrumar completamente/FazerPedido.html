@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livraria</title>
+    <link rel="stylesheet" href="FazerPedido.css">
+</head>
+<body>
+
+    <!-- Barra superior de endereço -->
+    <header class="topo">
+        <span>Endereço: Rua Exemplo, 123</span>
+        <button onclick="window.location.href='Cadastro2.html'">Alterar</button>
+    </header>
+
+    <div class="container">
+
+        <!-- Produto -->
+        <div class="produto">
+            <img src="img/capa.jpg" alt="Capa do Livro">
+            <div class="info-produto">
+                <h3>Nome do Produto</h3>
+                <p>Preço: R$00,00</p>
+                <p>Quantidade: 2</p>
+            </div>
+        </div>
+
+        <!-- Cupom -->
+        <label for="cupomLoja">Cupom da Loja</label>
+        <input type="text" id="cupomLoja">
+
+        <!-- Frete -->
+        <fieldset>
+            <legend>Correios</legend>
+            <label><input type="radio" name="frete"> Entrega Padrão R$00,00</label>
+            <label><input type="radio" name="frete"> Entrega Rápida R$00,00</label>
+        </fieldset>
+
+        <!-- Impostos -->
+        <div class="resumo">
+            <p>Imposto de Importação: R$00,00</p>
+            <p>ICMS: R$00,00</p>
+            <p>Total (2 itens): R$00,00</p>
+        </div>
+
+        <!-- Cupom site -->
+        <label for="cupomSite">Cupom do Site</label>
+        <input type="text" id="cupomSite">
+
+        <!-- Pagamento -->
+        <fieldset>
+            <legend>Método de Pagamento</legend>
+
+            <label><input type="radio" name="pagamento"> Pix</label>
+            <label><input type="radio" name="pagamento" id="credito"> Cartão de Crédito</label>
+
+            <!-- Parcelamento -->
+            <div class="parcelas">
+                <p>Parcelamento:</p>
+                <select>
+                    <option>1x sem juros</option>
+                    <option>2x sem juros</option>
+                    <option>3x sem juros</option>
+                </select>
+            </div>
+
+            <label><input type="radio" name="pagamento"> Cartão de Débito</label>
+            <label><input type="radio" name="pagamento"> Parcele no Pix</label>
+            <label><input type="radio" name="pagamento"> PayPal</label>
+            <label><input type="radio" name="pagamento"> Boleto Bancário</label>
+        </fieldset>
+
+        <!-- Resumo final -->
+        <div class="total">
+            <p>Total dos Produtos: R$00,00</p>
+            <p>Frete: R$00,00</p>
+            <hr>
+            <h3>Total: R$00,00</h3>
+        </div>
+
+        <button class="btn" onclick="window.location.href='Entrar.html'">Fazer Pedido</button>
+
+    </div>
+
+</body>
+</html>
